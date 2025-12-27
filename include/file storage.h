@@ -73,7 +73,7 @@ private:
         void insert(const KVmap &kv);
         void erase(const KVmap &kv);
         void collectValues(const K &index, std::vector<V> &values);
-
+        void collectAllValues(std::vector<V> &values);
         const KVmap& getFirst() const { return first_; }
         const KVmap& getLast() const { return last_; }
         int getOffset() const { return offset; }
@@ -195,6 +195,7 @@ public:
     void insert(const K &index, const V &value);
     void erase(const K &index, const V &value);
     std::vector<V> find(const K &index);
+    std::vector<V> getAll();
 };
 
 template<typename K,typename V>
@@ -258,6 +259,15 @@ void LinkedBlock<K,V>::Block::collectValues(const K &index, std::vector<V> &valu
         {
             values.push_back(data[i].value_);
         }
+    }
+}
+
+template<typename K,typename V>
+void LinkedBlock<K,V>::Block::collectAllValues(std::vector<V> &values)
+{
+    for (int i = 0; i < num; ++i)
+    {
+        values.push_back(data[i].value_);
     }
 }
 
@@ -393,6 +403,29 @@ std::vector<V> LinkedBlock<K,V>::find(const K &index)
             Block block = readBlock(cur_offset);
             block.collectValues(index, values);
         }
+        cur_offset = next;
+    }
+    return values;
+}
+
+template<typename K,typename V>
+std::vector<V> LinkedBlock<K,V>::getAll()
+{
+    std::vector<V> values;
+    int cur_offset = head_offset;
+    while (cur_offset != -1)
+    {
+        KVmap first, last;
+        int next, num;
+        readBlockMeta(cur_offset, first, last, next, num);
+
+        if (num == 0)
+        {
+            cur_offset = next;
+            continue;
+        }
+            Block block = readBlock(cur_offset);
+            block.collectAllValues(values);
         cur_offset = next;
     }
     return values;
