@@ -176,6 +176,7 @@ bool UserManager::registerUser(const std::string& id,const std::string& password
         return false;
     }
     UserInfo new_user(password,name,1);
+    new_user.is_logged = false;
     user_storage.insert(uid,new_user);
     return true;
 }
