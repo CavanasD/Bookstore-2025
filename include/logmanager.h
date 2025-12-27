@@ -53,7 +53,7 @@ private:
 
 public:
     LogManager(BookManager& bm,UserManager& um):
-    op_log_storage("data/op_logs.dat"),book_manager(bm),user_manager(um),op_id_count(0)
+    op_log_storage("op_logs.dat"),book_manager(bm),user_manager(um),op_id_count(0)
     {
         initOpCount();
     }

@@ -1,3 +1,7 @@
 requirements.md
 *.o
 *.a
+build/*
+testcases/*
+run_tests
+test_output/*

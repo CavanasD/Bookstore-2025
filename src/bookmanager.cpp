@@ -118,6 +118,8 @@ bool BookManager::show(const std::string& type,const std::string& value)
     {
         for (auto &book : target_books)
         {
+            std::cerr << "isbn: " << book.isbn.toString() << '\n';
+            std::cerr << "name: " << book.name.toString() << '\n';
             std::cout << book.isbn.toString() << '\t' << book.name.toString() << '\t' << book.author.toString() << '\t' << book.keywords.toString() << '\t' << Tool::TwoDouble(book.price) << '\t' << book.quantity << '\n';
         }
     }
@@ -128,6 +130,7 @@ bool BookManager::buy(const std::string& isbn,int quantity)
 {
     if (cur_privilege < 1 || quantity <= 0 || !Tool::isValidISBN(isbn))
     {
+        std::cerr << "bad cons" << std::endl;
         Tool::printInvalid();
         return false;
     }
@@ -135,12 +138,14 @@ bool BookManager::buy(const std::string& isbn,int quantity)
     std::vector<BookInfo> target_books = book_storage.find(isbn_key);
     if (target_books.empty())
     {
+        std::cerr << "not found" << std::endl;
         Tool::printInvalid();
         return false;
     }
     BookInfo& book = target_books[0];
     if (book.quantity < quantity)
     {
+        std::cerr << "not enough" << std::endl;
         Tool::printInvalid();
         return false;
     }
@@ -211,6 +216,7 @@ bool BookManager::modify(const std::map<const std::string,std::string>& target)
     }
     MakeArray isbn_key = selected_book;
     std::vector<BookInfo> target_books = book_storage.find(isbn_key);
+    std::vector<BookInfo> all_books = book_storage.getAll();
     if (target_books.empty())
     {
         Tool::printInvalid();
@@ -231,6 +237,13 @@ bool BookManager::modify(const std::map<const std::string,std::string>& target)
                 book_storage.insert(isbn_key,book);
                 return false;
             }
+            for(auto book : all_books){
+                if(value == book.isbn.toString()){
+                     Tool::printInvalid();
+                book_storage.insert(isbn_key,book);
+                return false;
+                }
+            }
             tmp_book.isbn = MakeArray(value);
         }
         else if (key == "name")
@@ -241,7 +254,7 @@ bool BookManager::modify(const std::map<const std::string,std::string>& target)
                 book_storage.insert(isbn_key,book);
                 return false;
             }
-            tmp_book.isbn = MakeArray(value);
+            tmp_book.name = MakeArray(value);
         }
         else if (key == "author")
         {

@@ -278,7 +278,7 @@ bool CommandParser::parseShowfinance(const std::vector<std::string>& cmds)
         Tool::printInvalid();
         return false;
     }
-    int count = 2147483647;
+    int count = -1;
     if (cmds.size() == 3)
     {
         if (!Tool::isValidQuantity(cmds[2],count))
@@ -287,6 +287,7 @@ bool CommandParser::parseShowfinance(const std::vector<std::string>& cmds)
             return false;
         }
     }
+    std::cerr << "sf count: " << count << std::endl;
     bool result = log_manager.Showfinance(count);
     if (result)
     {

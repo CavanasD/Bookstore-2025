@@ -47,20 +47,29 @@ bool UserInfo::operator>=(const UserInfo& other) const
     std::vector<UserInfo> root_info = user_storage.find(root_id);
     if (root_info.empty())
     {
-        UserInfo root{"sjtu","付长睿",7};
+        UserInfo root{"sjtu","root",7};
         user_storage.insert(root_id,root);
+        std::cerr << user_storage.find(root_id).size() << std::endl;
     }
 }
 //有个小问题，如果该用户已经进入登录栈，重复登录效果是什么样
 bool UserManager::su(const std::string& id,const std::string& password)
 {
+    auto vec = user_storage.getAll();
+    for (auto i : vec)
+    {
+        std::cerr << "user: ";
+        std::cerr << i.username.toString() << std::endl;
+    }
     if (id.empty())
     {
+        std::cerr << "empty id" << std::endl;
         Tool::printInvalid();
         return false;
     }
     if (!Tool::isValidUserID(id))
     {
+        std::cerr << "invalid id" << std::endl;
         Tool::printInvalid();
         return false;
     }
@@ -68,6 +77,7 @@ bool UserManager::su(const std::string& id,const std::string& password)
     std::vector<UserInfo> infos = user_storage.find(uid);
     if (infos.empty())
     {
+        std::cerr << "empty info" << std::endl;
         Tool::printInvalid();
         return false;
     }
@@ -90,6 +100,7 @@ bool UserManager::su(const std::string& id,const std::string& password)
         user_storage.insert(uid,user);
         return true;
     }
+    std::cerr << user.password.toString() << std::endl;
     if (password.empty() || !Tool::isValidPassword(password) || user.password != MakeArray(password))
     {
         Tool::printInvalid();
@@ -246,6 +257,7 @@ bool UserManager::useradd(const std::string& id,const std::string& pw,int priv,c
         return false;
     }
     UserInfo new_user(pw,name,priv);
+    new_user.is_logged = false;
     user_storage.insert(uid,new_user);
     return true;
 }

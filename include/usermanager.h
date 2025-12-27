@@ -33,9 +33,11 @@ private:
     int cur_privilege;
     void Initial_Root_user();
 public:
-    UserManager() : user_storage("data/users.dat"),cur_privilege(0)
+    UserManager() : user_storage("users.dat"),cur_privilege(0)
     {
+        // std::cerr << "construct user manager" << std::endl;
         Initial_Root_user();
+        // std::cerr << "constructed user manager" << std::endl;
     }
     bool su(const std::string& id,const std::string& password = "");
     bool logout();

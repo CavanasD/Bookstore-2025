@@ -9,6 +9,7 @@
 #include<array>
 #include<algorithm>
 #include<limits>
+#include <bits/locale_facets_nonio.h>
 
 template<typename K,typename V> class LinkedBlock
 {
@@ -25,13 +26,15 @@ private:
         bool operator<(const KVmap &other) const
         {
             if (index_ != other.index_)  return index_ < other.index_;
-            return value_ < other.value_;
+            // return value_ < other.value_;
+            return 0;
         }
 
         bool operator>(const KVmap &other) const
         {
             if (index_ != other.index_)  return index_ > other.index_;
-            return value_ > other.value_;
+            // return value_ > other.value_;
+            return 0;
         }
 
         bool operator==(const KVmap &other) const
@@ -388,6 +391,7 @@ std::vector<V> LinkedBlock<K,V>::find(const K &index)
 
     while (cur_offset != -1)
     {
+        std::cerr << "cur_offset: " << cur_offset << std::endl;
         KVmap first, last;
         int next, num;
         readBlockMeta(cur_offset, first, last, next, num);
@@ -402,6 +406,7 @@ std::vector<V> LinkedBlock<K,V>::find(const K &index)
         {
             Block block = readBlock(cur_offset);
             block.collectValues(index, values);
+            std::cerr << values.size() << std::endl;
         }
         cur_offset = next;
     }

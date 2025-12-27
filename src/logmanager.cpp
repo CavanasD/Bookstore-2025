@@ -32,18 +32,22 @@ bool LogManager::Showfinance(int count)
     }
     std::vector<TradeRecord> trades = book_manager.showFinance(count);
     double income = 0.0; double outcome = 0;
-    if (count < 0 || count > trades.size())
+    std::cerr << count << " a" << std::endl;
+    std::cerr << trades.size() << " b" << std::endl;
+    if (count > (int)trades.size())
     {
+        std::cerr << count << ">" << trades.size() << " c" << std::endl;
         Tool::printInvalid();
         return false;
     }
-     if (count == 0)
+    if (count == 0)
     {
         std::cout << '\n';
          return true;
     }
     for (auto& trade : trades)
     {
+        std::cerr << "amount " << trade.amount << std::endl;
         if (trade.amount > 0)
         {
             income += trade.amount;
@@ -53,7 +57,7 @@ bool LogManager::Showfinance(int count)
             outcome += -trade.amount;
         }
     }
-    std::cout << "+" << Tool::TwoDouble(income) << "-" << Tool::TwoDouble(outcome) << '\n';
+    std::cout << "+ " << Tool::TwoDouble(income) << " - " << Tool::TwoDouble(outcome) << '\n';
     return true;
 }
 //财务报表

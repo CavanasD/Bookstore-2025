@@ -168,11 +168,13 @@ public:
     //用于分解命令行输入指令的函数
     static std::vector<std::string> splitCommand(const std::string& str)
     {
+        std::cerr << "split cmd " << str <<std::endl;
         std::vector<std::string> tokens;
-        std::stringstream ss(RemoveBlank(str));
+        std::stringstream ss(str);
         std::string token;
         while (ss >> token)
         {
+            std::cerr << "token " << token << std::endl;
             tokens.push_back(token);
         }
         return tokens;

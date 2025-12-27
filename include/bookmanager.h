@@ -103,7 +103,7 @@ private:
     void initTradeCounter();
 
 public:
-    BookManager():book_storage("data/books.dat"),trade_storage("data/trades.dat"),cur_privilege(0),trade_id_count(0)
+    BookManager():book_storage("books.dat"),trade_storage("trades.dat"),cur_privilege(0),trade_id_count(0)
     {
         initTradeCounter();
     }
