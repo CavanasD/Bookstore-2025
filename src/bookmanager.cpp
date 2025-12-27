@@ -312,7 +312,7 @@ std::vector<TradeRecord> BookManager::showFinance(int count)
 {
     std::vector<TradeRecord> all_trades = trade_storage.getAll();
     std::sort(all_trades.begin(),all_trades.end());
-    if (count == -1 || count >= all_trades.size())
+    if (count == 2147483647 || count >= all_trades.size())
     {
         return all_trades;
     }
@@ -326,4 +326,10 @@ std::vector<TradeRecord> BookManager::showFinance(int count)
         return new_trades;
     }
     else return {};
+}
+std::vector<TradeRecord> BookManager::showAll()
+{
+    std::vector<TradeRecord> all_trades = trade_storage.getAll();
+    std::sort(all_trades.begin(),all_trades.end());
+    return all_trades;
 }

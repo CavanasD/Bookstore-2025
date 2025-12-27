@@ -118,5 +118,6 @@ public:
     bool modify(const std::map<const std::string,std::string>& target);
     bool import(int quantity,double total_cost);
     std::vector<TradeRecord> showFinance(int count = 2147483647);
+    std::vector<TradeRecord> showAll();
 };
 #endif //BOOKSTORE_2025_BOOKMANAGER_H

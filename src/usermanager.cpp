@@ -47,7 +47,7 @@ bool UserInfo::operator>=(const UserInfo& other) const
     std::vector<UserInfo> root_info = user_storage.find(root_id);
     if (root_info.empty())
     {
-        UserInfo root{"sjtu","capital",7};
+        UserInfo root{"sjtu","付长睿",7};
         user_storage.insert(root_id,root);
     }
 }
