@@ -2,6 +2,7 @@
 #ifndef BOOKSTORE_2025_BOOKMANAGER_H
 #define BOOKSTORE_2025_BOOKMANAGER_H
 #include"file storage.h"
+#include"usermanager.h"
 #include"makearray.h"
 #include"tool.h"
 #include<vector>
@@ -111,7 +112,7 @@ public:
     {
         cur_privilege = now_user.privilege;
         cur_operator = MakeArray(now_user.userid);
-        selected_book = MakeArray(now_user.selected_book);
+        selected_book = MakeArray(now_user.selected_book_isbn);
     }
     bool show(const std::string& type,const std::string& val);
     bool buy(const std::string& isbn,int quantity);

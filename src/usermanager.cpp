@@ -48,6 +48,7 @@ bool UserInfo::operator>=(const UserInfo& other) const
     if (root_info.empty())
     {
         UserInfo root{"sjtu","root",7};
+        root.is_logged = false;
         user_storage.insert(root_id,root);
         std::cerr << user_storage.find(root_id).size() << std::endl;
     }
@@ -92,7 +93,7 @@ bool UserManager::su(const std::string& id,const std::string& password)
                 return false;
             }
         }
-        user_stack now_user{uid,user.privilege,""};
+        user_stack now_user{id,user.privilege,""};
         login_stack.push(now_user);
         cur_user = uid;
         cur_privilege = user.privilege;
@@ -107,7 +108,7 @@ bool UserManager::su(const std::string& id,const std::string& password)
         Tool::printInvalid();
         return false;
     }
-    user_stack now_user{uid,user.privilege,""};
+    user_stack now_user{id,user.privilege,""};
         login_stack.push(now_user);
     cur_user = uid;
     cur_privilege = user.privilege;

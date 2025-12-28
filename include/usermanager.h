@@ -29,8 +29,8 @@ struct user_stack
     MakeArray userid;
     int privilege;
     MakeArray selected_book_isbn;
-    user_stack();
-    user_stack(const std::string& userid,int priv) : userid(MakeArray(userid)),privilege(priv),selected_book_isbn(""){}
+    user_stack():userid(MakeArray("")),privilege(0),selected_book_isbn(MakeArray("")){}
+    user_stack(std::string userid,int priv,std::string book) : userid(MakeArray(userid)),privilege(priv),selected_book_isbn(MakeArray(book)){}
 };
 class UserManager
 {
@@ -41,7 +41,7 @@ private:
     int cur_privilege;
     void Initial_Root_user();
 public:
-    UserManager() : user_storage("users.dat"),cur_privilege(0)
+    UserManager() : user_storage("users.dat"),cur_privilege(0),cur_user(MakeArray(""))
     {
         // std::cerr << "construct user manager" << std::endl;
         Initial_Root_user();
@@ -53,7 +53,7 @@ public:
     bool passwd(const std::string& id,const std::string& cur_pw,const std::string& new_pw);
     bool useradd(const std::string& id,const std::string& pw,int priv,const std::string& username);
     bool deleteUser(const std::string& id);
-    user_stack getCurUser()
+    user_stack& getCurUser()
     {
             return login_stack.top();
     };
