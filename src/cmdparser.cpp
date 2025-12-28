@@ -44,7 +44,7 @@ bool CommandParser::parseLogout(const std::vector<std::string>& cmds)
         Tool::printInvalid();
         return false;
     }
-    std::string cur_user = user_manager.getCurUser();
+    std::string cur_user = user_manager.getCurUser().userid;
     bool result = user_manager.logout();
     if (result)
     {
@@ -66,7 +66,7 @@ bool CommandParser::parseRegister(const std::vector<std::string>& cmds)
     bool result = user_manager.registerUser(user_id, pwd, uname);
     if (result)
     {
-        log_manager.logOperation(user_manager.getCurUser(),"register",user_id);
+        log_manager.logOperation(user_manager.getCurUser().userid,"register",user_id);
     }
     return result;
 }
@@ -83,7 +83,7 @@ bool CommandParser::parsePasswd(const std::vector<std::string>& cmds)
     bool result = user_manager.passwd(user_id, cur_pwd, new_pwd);
     if (result)
     {
-        log_manager.logOperation(user_manager.getCurUser(),"passwd",user_id);
+        log_manager.logOperation(user_manager.getCurUser().userid,"passwd",user_id);
     }
     return result;
 }
@@ -101,7 +101,7 @@ bool CommandParser::parseUseradd(const std::vector<std::string>& cmds)
     bool result = user_manager.useradd(user_id,pwd,priv, uname);
     if (result)
     {
-        log_manager.logOperation(user_manager.getCurUser(),"useradd",user_id);
+        log_manager.logOperation(user_manager.getCurUser().userid,"useradd",user_id);
     }
     return result;
 }
@@ -116,7 +116,7 @@ bool CommandParser::parseDelete(const std::vector<std::string>& cmds)
     bool result = user_manager.deleteUser(user_id);
     if (result)
     {
-        log_manager.logOperation(user_manager.getCurUser(),"delete",user_id);
+        log_manager.logOperation(user_manager.getCurUser().userid,"delete",user_id);
     }
     return result;
 }
@@ -165,7 +165,7 @@ bool CommandParser::parseShow(const std::vector<std::string>& cmds)
     bool result = book_manager.show(type,value);
     if (result)
     {
-        log_manager.logOperation(user_manager.getCurUser(),"show",type + ":" + value);
+        log_manager.logOperation(user_manager.getCurUser().userid,"show",type + ":" + value);
     }
     return result;
 }
@@ -186,7 +186,7 @@ bool CommandParser::parseBuy(const std::vector<std::string>& cmds)
     bool result = book_manager.buy(isbn, quantity);
     if (result)
     {
-        log_manager.logOperation(user_manager.getCurUser(),"buy",isbn + ":" + std::to_string(quantity));
+        log_manager.logOperation(user_manager.getCurUser().userid,"buy",isbn + ":" + std::to_string(quantity));
     }
     return result;
 }
@@ -201,7 +201,7 @@ bool CommandParser::parseSelect(const std::vector<std::string>& cmds)
     bool result = book_manager.select(isbn);
     if (result)
     {
-        log_manager.logOperation(user_manager.getCurUser(),"select",isbn);
+        log_manager.logOperation(user_manager.getCurUser().userid,"select",isbn);
     }
     return result;
 }
@@ -245,7 +245,7 @@ bool CommandParser::parseModify(const std::vector<std::string>& cmds)
     bool result = book_manager.modify(modify_cmd);
     if (result)
     {
-        log_manager.logOperation(user_manager.getCurUser(),"modify",book_manager.getSelectBook());
+        log_manager.logOperation(user_manager.getCurUser().userid,"modify",book_manager.getSelectBook());
     }
     return result;
 }
@@ -266,7 +266,7 @@ bool CommandParser::parseImport(const std::vector<std::string>& cmds)
     bool result = book_manager.import(quantity, total_cost);
     if (result)
     {
-        log_manager.logOperation(user_manager.getCurUser(),"import",book_manager.getSelectBook() +":" + std::to_string(quantity) + "for" + std::to_string(total_cost));
+        log_manager.logOperation(user_manager.getCurUser().userid,"import",book_manager.getSelectBook() +":" + std::to_string(quantity) + "for" + std::to_string(total_cost));
     }
     return result;
 }
@@ -291,7 +291,7 @@ bool CommandParser::parseShowfinance(const std::vector<std::string>& cmds)
     bool result = log_manager.Showfinance(count);
     if (result)
     {
-        log_manager.logOperation(user_manager.getCurUser(),"show finance",std::to_string(count));
+        log_manager.logOperation(user_manager.getCurUser().userid,"show finance",std::to_string(count));
     }
     return result;
 }
@@ -305,7 +305,7 @@ bool CommandParser::parseReportfinance(const std::vector<std::string>& cmds)
     bool result = log_manager.reportFinance();
     if (result)
     {
-        log_manager.logOperation(user_manager.getCurUser(),"report finance","");
+        log_manager.logOperation(user_manager.getCurUser().userid,"report finance","");
     }
     return result;
 }
@@ -319,7 +319,7 @@ bool CommandParser::parseReportemployee(const std::vector<std::string>& cmds)
     bool result = log_manager.reportEmployee();
     if (result)
     {
-        log_manager.logOperation(user_manager.getCurUser(),"report employee","");
+        log_manager.logOperation(user_manager.getCurUser().userid,"report employee","");
     }
     return result;
 }
@@ -333,7 +333,7 @@ bool CommandParser::parseLog(const std::vector<std::string>& cmds)
     bool result = log_manager.log();
     if (result)
     {
-        log_manager.logOperation(user_manager.getCurUser(),"log","");
+        log_manager.logOperation(user_manager.getCurUser().userid,"log","");
     }
     return result;
 }
