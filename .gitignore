@@ -5,3 +5,4 @@ build/*
 testcases/*
 run_tests
 test_output/*
+temp/*

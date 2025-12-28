@@ -37,6 +37,11 @@ bool BookManager::show(const std::string& type,const std::string& value)
             Tool::printInvalid();
             return false;
         }
+        // std::cout << "*" << std::endl;
+        // for (auto &book : all_books) {
+        //     std::cout << book.author << " " << book.name << " " << book.isbn << std::endl;
+        // }
+        // std::cout << "*" << std::endl;
         if (type == "ISBN")
         {
             if (!Tool::isValidISBN(value))
@@ -66,6 +71,7 @@ bool BookManager::show(const std::string& type,const std::string& value)
         else if (type == "author")
         {
             std::string author_val = Tool::RemoveQuoted(value);
+            // std::cout << "*author*" << author_val << std::endl;
             if (!Tool::isValidAuthor(author_val))
             {
                 Tool::printInvalid();
@@ -73,8 +79,10 @@ bool BookManager::show(const std::string& type,const std::string& value)
             }
             for (auto &book : all_books)
             {
+                // std::cout << book.author << " " << book.name << " " << book.isbn << std::endl;
                 if (book.author == author_val)
                 {
+                    // std::cout << "found" << std::endl;
                     target_books.push_back(book);
                 }
             }
@@ -153,10 +161,7 @@ bool BookManager::buy(const std::string& isbn,int quantity)
     std::cout << Tool::TwoDouble(total) << '\n';
     book.quantity -= quantity;
     book_storage.erase(isbn_key,book);
-    if (book.quantity > 0)
-    {
-        book_storage.insert(isbn_key,book);
-    }
+    book_storage.insert(isbn_key,book);
     TradeRecord trade(isbn,-quantity,total,cur_operator.toString(),trade_id_count++);
     trade_storage.insert(isbn_key,trade);
     return true;
@@ -237,8 +242,8 @@ bool BookManager::modify(const std::map<const std::string,std::string>& target)
                 book_storage.insert(isbn_key,book);
                 return false;
             }
-            for(auto book : all_books){
-                if(value == book.isbn.toString()){
+            for(auto bookss : all_books){
+                if(value == bookss.isbn.toString()){
                      Tool::printInvalid();
                 book_storage.insert(isbn_key,book);
                 return false;
