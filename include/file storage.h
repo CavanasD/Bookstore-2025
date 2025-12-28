@@ -26,13 +26,15 @@ private:
         bool operator<(const KVmap &other) const
         {
             if (index_ != other.index_)  return index_ < other.index_;
-             return value_ < other.value_;
+            // return value_ < other.value_;
+            return 0;
         }
 
         bool operator>(const KVmap &other) const
         {
             if (index_ != other.index_)  return index_ > other.index_;
-             return value_ > other.value_;
+            // return value_ > other.value_;
+            return 0;
         }
 
         bool operator==(const KVmap &other) const
@@ -252,9 +254,11 @@ void LinkedBlock<K,V>::Block::erase(const KVmap &kv)
 template<typename K,typename V>
 void LinkedBlock<K,V>::Block::collectValues(const K &index, std::vector<V> &values)
 {
+    KVmap min_kv(index, std::numeric_limits<V>::min());
+    KVmap max_kv(index, std::numeric_limits<V>::max());
     for (int i = 0; i < num; ++i)
     {
-        if (data[i].index_ == index)
+        if (data[i] >= min_kv && data[i] <= max_kv)
         {
             values.push_back(data[i].value_);
         }
@@ -373,7 +377,6 @@ void LinkedBlock<K,V>::erase(const K &index, const V &value)
                 next_next_block.setPreOffset(block_offset);
                 writeBlock(next_next_offset, next_next_block);
             }
-            num_of_blocks--;
         }
     }
 }
@@ -382,6 +385,8 @@ template<typename K,typename V>
 std::vector<V> LinkedBlock<K,V>::find(const K &index)
 {
     std::vector<V> values;
+    KVmap min_kv(index, std::numeric_limits<V>::min());
+    KVmap max_kv(index, std::numeric_limits<V>::max());
     int cur_offset = head_offset;
 
     while (cur_offset != -1)
@@ -396,8 +401,8 @@ std::vector<V> LinkedBlock<K,V>::find(const K &index)
             cur_offset = next;
             continue;
         }
-        if (first.index_ > index) break;
-        if (last.index_ >= index)
+        if (first > max_kv) break;
+        if (last >= min_kv)
         {
             Block block = readBlock(cur_offset);
             block.collectValues(index, values);
