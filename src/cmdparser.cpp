@@ -34,6 +34,7 @@ bool CommandParser::parseSu(const std::vector<std::string>& cmds)
     {
         log_manager.logOperation(user_id,"su",user_id);
         book_manager.setCurOperator(user_id,user_manager.getUserPrivilege());
+        book_manager.getSelectBook() = "";
     }
     return result;
 }
