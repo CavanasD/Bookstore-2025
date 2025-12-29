@@ -58,7 +58,7 @@ public:
     //用于判断ISBN是否合规
     static bool isValidISBN(const std::string& str)
     {
-        if (str.empty() || str.size() > 20) return false;
+        if (str.size() > 20) return false;
         for (char c : str)
         {
             if (iscntrl(c) || c == 32) return false;
@@ -68,7 +68,7 @@ public:
     //用于判断书名是否合规
     static bool isValidBookname(const std::string& str)
     {
-        if (str.empty() || str.size() > 60) return false;
+        if (str.size() > 60) return false;
         for (char c : str)
         {
             if (iscntrl(c) || c == 32 || c == '"') return false;
@@ -83,7 +83,7 @@ public:
     //
     static bool isValidKeyword(const std::string& str)
     {
-        if (str.empty() || str.size() > 60) return false;
+        if (str.size() > 60) return false;
         std::vector<std::string> parts = split(str,'|');
         for (const auto& part : parts)
         {

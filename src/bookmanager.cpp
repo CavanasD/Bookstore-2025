@@ -138,7 +138,7 @@ bool BookManager::show(const std::string& type,const std::string& value)
 //购买函数实现
 bool BookManager::buy(const std::string& isbn,int quantity)
 {
-    if (cur_privilege < 1 || quantity <= 0 || !Tool::isValidISBN(isbn))
+    if (cur_privilege < 1 || quantity <= 0 || !Tool::isValidISBN(isbn) || isbn.empty())
     {
         std::cerr << "bad cons" << std::endl;
         Tool::printInvalid();
@@ -171,7 +171,7 @@ bool BookManager::buy(const std::string& isbn,int quantity)
 //选择图书的函数实现
 bool BookManager::select(const std::string& isbn)
 {
-    if (cur_privilege < 3 || !Tool::isValidISBN(isbn))
+    if (cur_privilege < 3 || !Tool::isValidISBN(isbn) || isbn.empty())
     {
         Tool::printInvalid();
         return false;
@@ -183,6 +183,9 @@ bool BookManager::select(const std::string& isbn)
         BookInfo new_book;
         new_book.isbn = isbn_key; new_book.quantity = 0;new_book.price = 0.0; new_book.author = "";new_book.keywords = "";new_book.name = "";
         book_storage.insert(isbn_key,new_book);
+        name_find.insert("",isbn_key);
+        author_find.insert("",isbn_key);
+        keywords_find.insert("",isbn_key);
     }
     selected_book = isbn_key;
     return true;
