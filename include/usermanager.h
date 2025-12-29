@@ -10,6 +10,7 @@
 
 struct UserInfo
 {
+    MakeArray userid;
     MakeArray password;
     MakeArray username;
     int privilege;

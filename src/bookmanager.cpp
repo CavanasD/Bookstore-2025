@@ -183,9 +183,6 @@ bool BookManager::select(const std::string& isbn)
         BookInfo new_book;
         new_book.isbn = isbn_key; new_book.quantity = 0;new_book.price = 0.0; new_book.author = "";new_book.keywords = "";new_book.name = "";
         book_storage.insert(isbn_key,new_book);
-        name_find.insert(MakeArray(""),isbn_key);
-        author_find.insert(MakeArray(""),isbn_key);
-        keywords_find.insert(MakeArray(""),isbn_key);
     }
     selected_book = isbn_key;
     return true;
@@ -313,12 +310,12 @@ bool BookManager::modify(const std::map<const std::string,std::string>& target)
     std::vector<std::string> old = Tool::split(book.keywords.toString(),'|');
     for (int i = 0;i < old.size();++i)
     {
-        keywords_find.erase(old[i],book.isbn);
+        keywords_find.erase(MakeArray(old[i]),book.isbn);
     }
     std::vector<std::string> flush = Tool::split(tmp_book.keywords.toString(),'|');
     for (int i = 0;i < flush.size();++i)
     {
-        keywords_find.insert(flush[i],tmp_book.isbn);
+        keywords_find.insert(MakeArray(flush[i]),tmp_book.isbn);
     }
     book_storage.insert(tmp_book.isbn,tmp_book);
     selected_book = tmp_book.isbn;

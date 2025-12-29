@@ -1,23 +1,23 @@
 #include"../include/usermanager.h"
 //构造userinfo
-UserInfo::UserInfo() :password(MakeArray("")),username(MakeArray("")), privilege(0),is_logged(false){}
+UserInfo::UserInfo() :userid(MakeArray("")),password(MakeArray("")),username(MakeArray("")), privilege(0),is_logged(false){}
 
 UserInfo::UserInfo(const std::string& pw,const std::string& us,int priv):
 password(MakeArray(pw)),username(MakeArray(us)),privilege(priv),is_logged(false){}
 
 bool UserInfo::operator<(const UserInfo& other) const
 {
-    return false;
+    return userid < other.userid;
 }
 
 bool UserInfo::operator==(const UserInfo& other) const
 {
-    return (password == other.password && username == other.username && privilege == other.privilege && is_logged == other.is_logged);
+    return (userid == other.userid && password == other.password && username == other.username && privilege == other.privilege && is_logged == other.is_logged);
 }
 
 bool UserInfo::operator>(const UserInfo& other) const
 {
-    return false;
+    return userid > other.userid;
 }
 
 bool UserInfo::operator!=(const UserInfo& other) const
