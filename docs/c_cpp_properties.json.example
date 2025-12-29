@@ -1,14 +1,14 @@
 {
   "configurations": [
     {
-      "name": "MinGW",
+      "name": "Example",
       "includePath": [
         "${workspaceFolder}/include",
         "${workspaceFolder}/src",
         "${workspaceFolder}/**"
       ],
       "defines": [],
-      "compilerPath": "C:/MinGW/bin/g++.exe",
+      "compilerPath": "<set-this-to-your-compiler>",
       "cStandard": "c17",
       "cppStandard": "c++17",
       "intelliSenseMode": "windows-gcc-x64"
